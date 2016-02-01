@@ -1,0 +1,46 @@
+#include <ros/ros.h>
+
+using namespace  std;
+
+int main(int argc, char** argv)
+{
+    ros::init(argc, argv, "param_demo");
+    ros::NodeHandle n;
+
+    //param的初始化方法,如果使用roslaunch启动,切launch文件中定义了param的默认值,则使用launch文件中的值初始化
+    //如果使用rosrun启动,则my_param在rosparam list指令下不可见,并且使用程序中的默认值初始化
+    std::string s;
+    n.param<std::string>("string_param", s, "default_string");
+
+    //注释这句话,使用rosrun启动节点时就看不到my_param
+    //n.setParam("string_param","hello there");
+
+    if (!n.hasParam("string_param"))
+       ROS_INFO("No param named 'string_param'");
+    else
+        ROS_INFO("One param named 'string_param'");
+
+    ROS_INFO("string_param:  %s", s.c_str());//输出初始化值
+    n.getParam("string_param",s);//如果使用roslaunch启动,此时s被改变为launch文件中的值初始化,否则"hello there"
+    ROS_INFO("string_param:  %s", s.c_str());
+
+    n.deleteParam("string_param");
+    if (!n.hasParam("string_param"))
+       ROS_INFO("'string_param' has been deleted");
+    else
+        ROS_INFO("'string_param' has not been deleted");
+
+    ROS_INFO("use commond 'rosparam set' to set my_param");
+
+    while(ros::ok())
+    {
+        if (n.getParam("string_param", s))
+        {
+          ROS_INFO("Got param: %s", s.c_str());
+          break;
+        }
+    }
+    ROS_INFO("This demo is completed");
+    ros::shutdown();
+}
+

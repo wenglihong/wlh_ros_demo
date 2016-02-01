@@ -1,0 +1,14 @@
+#! /usr/bin/env python
+
+PACKAGE='param_demo'
+import roslib
+roslib.load_manifest(PACKAGE)
+
+from dynamic_reconfigure.parameter_generator_catkin import *
+
+gen = ParameterGenerator()
+#       Name       Type      Level Description     Default Min   Max
+gen.add("s",       str_t,    0,    "string_param.", "hello")
+gen.add("num",     int_t,    0,    "int_param.",     1,    -100, 100)
+
+exit(gen.generate(PACKAGE, "param_demo", "param_demo"))

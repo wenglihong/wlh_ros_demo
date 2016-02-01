@@ -1,0 +1,7 @@
+<!-- launch file for param_demo -->
+<launch>
+  <node name="dynamic_param_demo" pkg="param_demo" type="dynamic_param_demo" output="screen"> 
+ 	 <param name="string_param" value="initialize from launch file" />
+  	 <param name="int_param" value="999" />
+  </node>
+</launch>

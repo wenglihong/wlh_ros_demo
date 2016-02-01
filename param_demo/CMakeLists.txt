@@ -1,0 +1,69 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(param_demo)
+
+
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+  std_msgs
+  dynamic_reconfigure
+)
+
+
+
+## Generate messages in the 'msg' folder
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
+
+## Generate services in the 'srv' folder
+# add_service_files(
+#   FILES
+#   Service1.srv
+#   Service2.srv
+# )
+
+## Generate actions in the 'action' folder
+# add_action_files(
+#   FILES
+#   Action1.action
+#   Action2.action
+# )
+
+## Generate added messages and services with any dependencies listed here
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
+
+
+generate_dynamic_reconfigure_options(
+   cfg/dynamic_param.cfg
+ )
+
+
+catkin_package(
+  INCLUDE_DIRS include
+  LIBRARIES ros_msg
+  CATKIN_DEPENDS roscpp rospy std_msgs dynamic_reconfigure
+  DEPENDS system_lib
+)
+
+###########
+## Build ##
+###########
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
+
+add_executable(param_demo src/param_demo.cpp)
+target_link_libraries(param_demo ${catkin_LIBRARIES})
+
+add_executable(dynamic_param_demo src/dynamic_param_demo.cpp)
+target_link_libraries(dynamic_param_demo ${catkin_LIBRARIES})
+
+
+
