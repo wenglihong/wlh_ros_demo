@@ -27,8 +27,7 @@ int main(int argc, char **argv)
     output.len = 2;
     output.data[0] = 10;
     output.data[1] = 20;
-    output.data[2] = 30;
-    output.data[3] = 40;
+    output.data.push_back(30);
     
     pub_can_data.publish(output);
 	
